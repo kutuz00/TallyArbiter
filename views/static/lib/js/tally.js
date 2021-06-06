@@ -44,7 +44,7 @@ function onLoad() {
 		selectedDeviceId = deviceId;
 		updateTallyInfo();
 	});
-	socket.on('messaging', function(type, socketid, message) {
+	socket.on('messaging', function (type, socketid, message) {
 		insertChat(type, socketid, message);
 	});
 }
@@ -113,23 +113,23 @@ function checkQueryString() {
 }
 
 function getParameterByName(name, url = window.location.href) {
-    name = name.replace(/[\[\]]/g, '\\$&');
-    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+	name = name.replace(/[\[\]]/g, '\\$&');
+	var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+		results = regex.exec(url);
+	if (!results) return null;
+	if (!results[2]) return '';
+	return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
 function getBusTypeById(busId) {
 	//gets the bus type (preview/program) by the bus id
-	let bus = Bus_Options.find(({id}) => id === busId);
+	let bus = Bus_Options.find(({ id }) => id === busId);
 	return bus.type;
 }
 
 function getDeviceById(deviceId) {
 	//gets the device by the id
-	let device = Devices.find(({id}) => id === deviceId);
+	let device = Devices.find(({ id }) => id === deviceId);
 	return device;
 }
 
@@ -152,20 +152,20 @@ function ProcessTallyData() {
 			}
 		}
 	}
-	if ((mode_preview) && (!mode_program)) {
+	if ((!mode_preview) && (!mode_program)) {
 		//preview mode, color it green
 		document.body.style.backgroundColor = '#00FF00';
 	}
-	else if ((!mode_preview) && (mode_program)) {
+	else if ((!mode_preview) && (mode_program) || (mode_preview) && (mode_program)) {
 		//program mode, color it red
 		document.body.style.backgroundColor = '#FF0000';
 	}
-	else if ((mode_preview) && (mode_program)) {
+	else if ((mode_preview) && (!mode_program)) {
 		//both, color it yellow
 		document.body.style.backgroundColor = '#FFCC00';
 	}
 	else {
-		document.body.style.backgroundColor = '#000000';
+		document.body.style.backgroundColor = '#333333';
 	}
 
 	if (mode_program) {
@@ -205,7 +205,7 @@ function KeepScreenAwake(value) { //keeps the phone screen on if true by using t
 var chat_me = client;
 
 $(document).ready(function () {
-	$('#btnShowHideChat').click(function() {
+	$('#btnShowHideChat').click(function () {
 		$(this).toggleClass("active");
 		if ($(this).hasClass("active")) {
 			$(this).text("Hide Chat");
